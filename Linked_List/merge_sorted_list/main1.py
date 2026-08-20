@@ -1,28 +1,25 @@
+from typing import Optional
+
 class ListNode:
     def __init__(self,val = 0, next=None):
         self.val = val
         self.next = next
 
 class Solution:
-    def mergeTwoLists(self, list1, list2):
-        values = []
-        
-        while list1:
-            values.append(list1.val)
-            list1 = list1.next
-            
-        while list2:
-            values.append(list2.val)
-            list2 = list2.next
-        
-        values.sort()
-        
-        dummy = ListNode(0)
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode()
         curr = dummy
         
-        for value in values:
-            curr.next = ListNode(value)
-            curr = curr.next
+        while list1 and list2:
+            if list1.val <= list2.val:
+                curr.next = list1
+                curr = list1
+                list1 = list1.next
             
-        return dummy.next
-    
+            else:
+                curr.next = list2
+                curr = list2
+                list2 = list2.next
+                
+            curr.next = list if list1 else list2
+            return dummy.next
